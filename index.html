@@ -118,50 +118,49 @@
                     </div>
                 </div>
 
-                <form id="auth-form" onsubmit="app.submitStage1(event)" class="space-y-4 max-w-md">
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">First Name</label>
-                            <input type="text" id="firstname-input" required value="Max" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Last Name</label>
-                            <input type="text" id="lastname-input" required value="Mustermann" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email Address (Username)</label>
-                        <input type="email" id="email-input" required value="participant_test@cloudproxy.net" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
-                        <p id="email-error" class="text-xs text-rose-600 mt-1 hidden">Please enter a valid email address.</p>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Mobile Phone Number (for SMS/Push)</label>
-                        <input type="tel" id="phone-input" required value="+49 151 98765432" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Master Password</label>
-                        <input type="password" id="password-input" required placeholder="Enter your password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
-                        <!-- Password criteria displayed upfront -->
-                        <ul class="text-[11px] text-slate-500 mt-1.5 space-y-0.5 list-disc list-inside bg-slate-50 p-2 rounded border border-slate-200">
-                            <li>At least 10 characters long</li>
-                            <li>Contains at least 1 number</li>
-                            <li>Contains at least 1 special character (e.g. !@#$%^&*)</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Confirm Password</label>
-                        <input type="password" id="password-confirm-input" required placeholder="Re-enter password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
-                        <p id="password-error" class="text-xs text-rose-600 mt-1 hidden">Passwords do not match or do not meet security criteria.</p>
-                    </div>
-                    <div class="pt-2 flex items-center space-x-3">
-                        <button type="button" onclick="app.goBack(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-lg transition-all border border-slate-300 text-sm cursor-pointer">
-                            Back
-                        </button>
-                        <button type="submit" class="flex-grow bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition-all text-sm cursor-pointer">
-                            Continue Registration
-                        </button>
-                    </div>
-                </form>
+                <div class="space-y-4 max-w-md">
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">First Name</label>
+            <input type="text" id="firstname-input" required value="Max" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+        </div>
+        <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Last Name</label>
+            <input type="text" id="lastname-input" required value="Mustermann" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+        </div>
+    </div>
+    <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email Address (Username)</label>
+        <input type="email" id="email-input" required value="participant_test@cloudproxy.net" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+        <p id="email-error" class="text-xs text-rose-600 mt-1 hidden">Please enter a valid email address.</p>
+    </div>
+    <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Mobile Phone Number (for SMS/Push)</label>
+        <input type="tel" id="phone-input" required value="+49 151 98765432" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+    </div>
+    <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Master Password</label>
+        <input type="password" id="password-input" required placeholder="Enter your password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+        <ul class="text-[11px] text-slate-500 mt-1.5 space-y-0.5 list-disc list-inside bg-slate-50 p-2 rounded border border-slate-200">
+            <li>At least 10 characters long</li>
+            <li>Contains at least 1 number</li>
+            <li>Contains at least 1 special character (e.g. !@#$%^&*)</li>
+        </ul>
+    </div>
+    <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Confirm Password</label>
+        <input type="password" id="password-confirm-input" required placeholder="Re-enter password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+        <p id="password-error" class="text-xs text-rose-600 mt-1 hidden">Passwords do not match or do not meet security criteria.</p>
+    </div>
+    <div class="pt-2 flex items-center space-x-3">
+        <button type="button" onclick="app.goBack(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-lg transition-all border border-slate-300 text-sm cursor-pointer">
+            Back
+        </button>
+        <button type="button" onclick="app.validateStage1()" class="flex-grow bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow transition-all text-sm cursor-pointer">
+            Continue Registration
+        </button>
+    </div>
+</div>
             </div>
 
             <!-- STAGE 1.5: Mandatory MFA Security Briefing & Policy Explanation -->
@@ -543,36 +542,36 @@
                 return parseFloat(elapsed.toFixed(2));
             }
 
-            submitStage1(e) {
-                e.preventDefault();
-                const emailInput = document.getElementById('email-input').value.trim();
-                const passInput = document.getElementById('password-input').value;
-                const confirmInput = document.getElementById('password-confirm-input').value;
-                
-                const emailError = document.getElementById('email-error');
-                const passError = document.getElementById('password-error');
 
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailInput)) {
-                    emailError.classList.remove('hidden');
-                    return;
-                } else {
-                    emailError.classList.add('hidden');
-                }
+validateStage1() {
+    const emailInput = document.getElementById('email-input').value.trim();
+    const passInput = document.getElementById('password-input').value;
+    const confirmInput = document.getElementById('password-confirm-input').value;
+    
+    const emailError = document.getElementById('email-error');
+    const passError = document.getElementById('password-error');
 
-                const passValid = passInput.length >= 10 && /\d/.test(passInput) && /[!@#$%^&*(),.?":{}|<>]/.test(passInput);
-                const passMatch = passInput === confirmInput;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput)) {
+        emailError.classList.remove('hidden');
+        return;
+    } else {
+        emailError.classList.add('hidden');
+    }
 
-                if (!passValid || !passMatch) {
-                    passError.classList.remove('hidden');
-                    return;
-                } else {
-                    passError.classList.add('hidden');
-                }
+    const passValid = passInput.length >= 10 && /\d/.test(passInput) && /[!@#$%^&*(),.?":{}|<>]/.test(passInput);
+    const passMatch = passInput === confirmInput;
 
-                // Proceed to mandatory security briefing page
-                this.goToStage('briefing');
-            }
+    if (!passValid || !passMatch) {
+        passError.classList.remove('hidden');
+        return;
+    } else {
+        passError.classList.add('hidden');
+    }
+
+    // Proceed to mandatory security briefing page
+    this.goToStage('briefing');
+}
 
             completeSecurityBriefing() {
                 if(this.sessionData.infoNudgePresent) {
