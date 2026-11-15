@@ -37,15 +37,10 @@
                 </div>
                 <div>
                     <span class="font-bold text-lg text-slateDark tracking-tight">Cloudstorage Proxy</span>
-                    <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full ml-2 border border-slate-200 hidden sm:inline-block">Secure Encrypted Vault v2.8</span>
                 </div>
             </div>
             <div class="flex items-center space-x-3">
-                <button onclick="app.openTelemetryModal()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-1.5 rounded-lg border border-slate-300 transition-all flex items-center space-x-1.5">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                    <span>Telemetry Log (<span id="log-count">0</span>)</span>
-                </button>
-                <button onclick="app.resetExperiment()" class="text-xs bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium px-3 py-1.5 rounded-lg border border-rose-200 transition-all">
+            <button onclick="app.resetExperiment()" class="text-xs bg-rose-50 hover:bg-rose-100 text-rose-700 font-medium px-3 py-1.5 rounded-lg border border-rose-200 transition-all">
                     Reset Session
                 </button>
             </div>
@@ -92,14 +87,10 @@
         <!-- WORKFLOW CONTAINER -->
         <div id="workflow-container" class="hidden bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden transition-all">
             
-            <!-- Progress Bar Header -->
+	    <!-- Progress Bar Header -->
             <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <span id="step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-100 text-cyan-800">Step 1 of 5</span>
                     <span id="step-title" class="text-sm font-semibold text-slateDark">Account Registration</span>
-                </div>
-                <div class="text-xs text-slate-500 font-mono">
-                    Timer: <span id="workflow-timer" class="font-bold text-slateDark">0.0s</span>
                 </div>
             </div>
 
@@ -279,7 +270,7 @@
                 </div>
             </div>
 
-            <!-- STAGE 4: Enrolment Completion & Success Dashboard -->
+	<!-- STAGE 4: Enrolment Completion & Success Dashboard -->
             <div id="stage-4" class="p-6 sm:p-8 space-y-6 text-center hidden">
                 <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
@@ -287,32 +278,10 @@
                 <div class="space-y-2">
                     <h2 class="text-2xl font-bold text-slateDark">Onboarding Complete!</h2>
                     <p class="text-sm text-slate-600 max-w-md mx-auto">
-                        Your account has been successfully secured with <span id="success-method-name" class="font-bold text-slateDark">Passkey</span>. You are now being redirected to your Cloudstorage Proxy dashboard.
+                        Your account has been successfully secured with <span id="success-method-name" class="font-bold text-slateDark">Passkey</span>.
                     </p>
                 </div>
-
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-left max-w-md mx-auto space-y-2 text-xs">
-                    <div class="font-bold text-slateDark uppercase tracking-wider">Recorded Telemetry Summary:</div>
-                    <div class="grid grid-cols-2 gap-1 text-slate-600">
-                        <div>Experimental Group:</div>
-                        <div id="telemetry-summary-group" class="font-semibold text-slateDark">Group 1</div>
-                        <div>Final Selection:</div>
-                        <div id="telemetry-summary-method" class="font-semibold text-slateDark">Passkey</div>
-                        <div>Total Decision Latency:</div>
-                        <div id="telemetry-summary-latency" class="font-semibold text-slateDark">0.0s</div>
-                    </div>
-                </div>
-
-                <div class="pt-2 flex justify-center space-x-3">
-                    <button onclick="app.openTelemetryModal()" class="bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold py-2.5 px-5 rounded-lg shadow transition-all cursor-pointer">
-                        View & Export Experiment Dataset
-                    </button>
-                    <button onclick="app.resetExperiment()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-semibold py-2.5 px-5 rounded-lg transition-all cursor-pointer">
-                        Run New Participant
-                    </button>
-                </div>
             </div>
-
         </div>
     </main>
 
@@ -502,19 +471,17 @@
                     document.getElementById(`stage-${stageNum}`).classList.remove('hidden');
                 }
 
-                const badge = document.getElementById('step-badge');
                 const title = document.getElementById('step-title');
 
                 const stageInfo = {
-                    1: { badge: "Step 1 of 5", title: "Account Registration" },
-                    'briefing': { badge: "Step 2 of 5", title: "Mandatory Security Briefing" },
-                    2: { badge: "Step 3 of 5", title: "Security Notice (Risk Disclosure)" },
-                    3: { badge: "Step 4 of 5", title: "2FA Selection" },
-                    'app-setup': { badge: "Step 5 of 5", title: "Authentication App Setup" },
-                    4: { badge: "Step 5 of 5", title: "Registration Completed" }
+                    1: { title: "Account Registration" },
+                    'briefing': { title: "Mandatory Security Briefing" },
+                    2: { title: "Security Notice (Risk Disclosure)" },
+                    3: { title: "2FA Selection" },
+                    'app-setup': { title: "Authentication App Setup" },
+                    4: { title: "Registration Completed" }
                 };
 
-                badge.innerText = (stageNum === 'briefing') ? stageInfo['briefing'].badge : stageInfo[stageNum].badge;
                 title.innerText = (stageNum === 'briefing') ? stageInfo['briefing'].title : stageInfo[stageNum].title;
 
                 if(stageNum === 3 && !this.startTime) {
@@ -844,6 +811,15 @@ validateStage1() {
                 this.telemetryLogs.push({...this.sessionData});
                 this.saveLogs();
 
+		<!-- Signal an Limesurvey senden -->
+   		if (window.parent !== window) {
+        		window.parent.postMessage({
+           		type: 'mfa_experiment_complete',
+            		method: methodId,
+            		latency: latency
+        	    }, '*');
+		};
+
                 const methodNames = {
                     'passkey': 'FIDO2 Passkeys',
                     'totp': 'App-based TOTP',
@@ -852,9 +828,6 @@ validateStage1() {
                 };
 
                 document.getElementById('success-method-name').innerText = methodNames[methodId] || methodId;
-                document.getElementById('telemetry-summary-group').innerText = `Group ${this.sessionData.group}`;
-                document.getElementById('telemetry-summary-method').innerText = methodNames[methodId] || methodId;
-                document.getElementById('telemetry-summary-latency').innerText = `${latency}s`;
 
                 const urlParams = new URLSearchParams(window.location.search);
                 const returnUrl = urlParams.get('return_url');
