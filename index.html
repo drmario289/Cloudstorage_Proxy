@@ -697,8 +697,10 @@ validateStage1() {
                     this.simulatePasskeyEnrolment();
                 } else if(this.pendingMethod === 'totp' || this.pendingMethod === 'push') {
                     this.showAppSetupInformation(this.pendingMethod);
+                } else if(this.pendingMethod === 'sms') {
+                    // SMS überspringt das Pop-up komplett und schließt direkt ab
+                    this.finalizeMfaSelection('sms');
                 } else {
-                    // Keep the existing short simulation for SMS-OTP.
                     this.simulateEnrolment(this.pendingMethod, () => {
                         this.finalizeMfaSelection(this.pendingMethod);
                     });
