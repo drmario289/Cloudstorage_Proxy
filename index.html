@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecureBank MFA Onboarding Experiment</title>
+    <title>Cloudstorage Proxy - Secure File Storage Onboarding</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter Font -->
@@ -33,11 +33,11 @@
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <div class="w-9 h-9 rounded-lg bg-slateDark flex items-center justify-center text-white font-bold shadow-md">
-                    SB
+                    CP
                 </div>
                 <div>
-                    <span class="font-bold text-lg text-slateDark tracking-tight">SecureBank Cloud</span>
-                    <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full ml-2 border border-slate-200 hidden sm:inline-block">Customer Portal v4.2</span>
+                    <span class="font-bold text-lg text-slateDark tracking-tight">Cloudstorage Proxy</span>
+                    <span class="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full ml-2 border border-slate-200 hidden sm:inline-block">Secure Encrypted Vault v2.8</span>
                 </div>
             </div>
             <div class="flex items-center space-x-3">
@@ -67,17 +67,22 @@
 
         <!-- LANDING PAGE / SETUP CARD -->
         <div id="setup-card" class="bg-white rounded-xl shadow-lg border border-slate-200 p-6 sm:p-8 mb-6 transition-all">
-            <div class="max-w-2xl mx-auto text-center space-y-4 py-4">
+            <div class="max-w-2xl mx-auto text-center space-y-5 py-4">
                 <div class="w-16 h-16 bg-cyan-100 text-cyan-700 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h10a4 4 0 004-4M7 10l5 5 5-5M12 15V3"></path></svg>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-slateDark">Welcome to SecureBank Cloud</h1>
-                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                    Protect your digital documents and financial assets with our state-of-the-art cloud storage platform. Begin your secure registration now to gain full access to your encrypted online portal.
-                </p>
-                <div class="pt-4">
+                <h1 class="text-2xl sm:text-3xl font-bold text-slateDark">Welcome to Cloudstorage Proxy</h1>
+                <div class="text-sm sm:text-base text-slate-600 leading-relaxed space-y-3 text-left bg-slate-50 p-5 rounded-xl border border-slate-200">
+                    <p>
+                        <strong>Cloudstorage Proxy</strong> is a completely free, highly secure platform designed for storing various types of files (documents, media, archives, and backups).
+                    </p>
+                    <p>
+                        Thanks to end-to-end encryption, strict zero-knowledge privacy protocols, and robust multi-layer infrastructure security, you can safely store your most <strong>confidential and sensitive content</strong> without compromising data ownership or privacy.
+                    </p>
+                </div>
+                <div class="pt-2">
                     <button onclick="app.startExperiment()" class="w-full sm:w-auto bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 mx-auto cursor-pointer">
-                        <span>Start Registration</span>
+                        <span>Start Free Account Registration</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </button>
                 </div>
@@ -90,7 +95,7 @@
             <!-- Progress Bar Header -->
             <div class="bg-slate-50 px-6 py-3 border-b border-slate-200 flex items-center justify-between">
                 <div class="flex items-center space-x-2">
-                    <span id="step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-100 text-cyan-800">Step 1 of 4</span>
+                    <span id="step-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-cyan-100 text-cyan-800">Step 1 of 5</span>
                     <span id="step-title" class="text-sm font-semibold text-slateDark">Account Registration</span>
                 </div>
                 <div class="text-xs text-slate-500 font-mono">
@@ -101,8 +106,8 @@
             <!-- STAGE 1: Primary Authentication Form -->
             <div id="stage-1" class="p-6 sm:p-8 space-y-6">
                 <div>
-                    <h2 class="text-xl font-bold text-slateDark">Set Up Your Credentials</h2>
-                    <p class="text-sm text-slate-500">Please provide your details and create a secure master password.</p>
+                    <h2 class="text-xl font-bold text-slateDark">Set Up Your Cloud Account</h2>
+                    <p class="text-sm text-slate-500">Please provide your details and create a secure master password for your encrypted vault.</p>
                 </div>
 
                 <!-- Experimental Data Notice -->
@@ -126,7 +131,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email Address (Username)</label>
-                        <input type="email" id="email-input" required value="participant_test@securebank.io" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+                        <input type="email" id="email-input" required value="participant_test@cloudproxy.net" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
                         <p id="email-error" class="text-xs text-rose-600 mt-1 hidden">Please enter a valid email address.</p>
                     </div>
                     <div>
@@ -157,6 +162,38 @@
                         </button>
                     </div>
                 </form>
+            </div>
+
+            <!-- STAGE 1.5: Mandatory MFA Security Briefing & Policy Explanation -->
+            <div id="stage-security-briefing" class="p-6 sm:p-8 space-y-6 hidden">
+                <div class="bg-indigo-50 border-l-4 border-indigo-600 p-4 rounded-r-lg">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-indigo-700 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <h3 class="text-base font-bold text-indigo-950">Mandatory Security Policy: Two-Factor Authentication (2FA) Required</h3>
+                    </div>
+                    <p class="text-xs text-indigo-700 mt-1">Cloudstorage Proxy security architecture enforcement.</p>
+                </div>
+
+                <div class="space-y-4 text-sm text-slate-700 leading-relaxed">
+                    <p>
+                        To guarantee the absolute confidentiality and integrity of your stored files against unauthorized access, credential stuffing, and cyber threats, <strong>Cloudstorage Proxy strictly mandates Multi-Factor Authentication (MFA)</strong> for all user accounts.
+                    </p>
+                    <p>
+                        Passwords alone can be compromised through phishing or data breaches elsewhere. By linking a secondary authentication factor, our platform ensures that even if your master password is exposed, your confidential documents remain fully protected.
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs text-slate-600 space-y-1">
+                        <span class="font-bold text-slateDark">Policy Enforcement:</span> Every account registration requires selecting and verifying a secondary authentication mechanism prior to activating vault storage access.
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3">
+                    <button onclick="app.goBack('briefing')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-5 rounded-xl transition-all border border-slate-300 text-sm cursor-pointer">
+                        Back
+                    </button>
+                    <button onclick="app.completeSecurityBriefing()" class="flex-grow bg-slateDark hover:bg-slate-800 text-white font-semibold py-3 px-6 rounded-xl shadow transition-all text-sm cursor-pointer">
+                        I Understand — Proceed to MFA Method Selection
+                    </button>
+                </div>
             </div>
 
             <!-- STAGE 2: Information Nudge (Condition-Dependent) -->
@@ -198,7 +235,7 @@
             <div id="stage-3" class="p-6 sm:p-8 space-y-6 hidden">
                 <div>
                     <h2 class="text-xl font-bold text-slateDark">Select Two-Factor Authentication (2FA)</h2>
-                    <p class="text-sm text-slate-500">Choose your preferred secondary security method to protect your account.</p>
+                    <p class="text-sm text-slate-500">Choose your preferred secondary security method to protect your account and encrypted files.</p>
                 </div>
 
                 <!-- MFA Options Container -->
@@ -216,6 +253,33 @@
                 </div>
             </div>
 
+            <!-- STAGE 3.5: External App Setup Information (Simulation) -->
+            <div id="stage-app-setup" class="p-6 sm:p-8 space-y-6 hidden">
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-5 h-5 text-blue-700 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h2 id="app-setup-title" class="text-xl font-bold text-slateDark">Set Up Your Authentication App</h2>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-sm text-slate-700 leading-relaxed">
+                    <p id="app-setup-instructions"></p>
+                    <div class="bg-amber-50 border border-amber-200 p-4 rounded-lg text-amber-900">
+                        <p class="font-bold mb-1">Simulation Notice</p>
+                        <p>This is a simulation for a research study. No app is actually installed, linked, or connected to your account, and no authentication setup is performed.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-3 pt-2">
+                    <button onclick="app.goBack(3)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-5 rounded-xl transition-all border border-slate-300 text-sm cursor-pointer">
+                        Back
+                    </button>
+                    <button onclick="app.completeAppSetupInformation()" class="flex-grow bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-3 px-6 rounded-xl shadow transition-all text-sm cursor-pointer">
+                        Continue
+                    </button>
+                </div>
+            </div>
+
             <!-- STAGE 4: Enrolment Completion & Success Dashboard -->
             <div id="stage-4" class="p-6 sm:p-8 space-y-6 text-center hidden">
                 <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
@@ -224,7 +288,7 @@
                 <div class="space-y-2">
                     <h2 class="text-2xl font-bold text-slateDark">Onboarding Complete!</h2>
                     <p class="text-sm text-slate-600 max-w-md mx-auto">
-                        Your account has been successfully secured with <span id="success-method-name" class="font-bold text-slateDark">Passkey</span>. You are now being redirected to your SecureBank dashboard.
+                        Your account has been successfully secured with <span id="success-method-name" class="font-bold text-slateDark">Passkey</span>. You are now being redirected to your Cloudstorage Proxy dashboard.
                     </p>
                 </div>
 
@@ -261,12 +325,21 @@
             </div>
             <div class="space-y-1">
                 <h3 id="enrolment-modal-title" class="text-lg font-bold text-slateDark">Setting up Passkey...</h3>
-                <p id="enrolment-modal-desc" class="text-xs text-slate-600">Please verify with TouchID, Windows Hello or your security key.</p>
+                <p id="enrolment-modal-desc" class="text-xs text-slate-600">Please verify with Touch ID, Windows Hello or your security key.</p>
             </div>
-            <div class="pt-2">
+            <!-- Experimental simulation clarification note -->
+            <div id="enrolment-simulation-note" class="bg-amber-50 border border-amber-200 p-2.5 rounded-lg text-[11px] text-amber-900 text-left">
+                <span class="font-bold">Study Simulation Note:</span> Due to the experimental setup, no actual external device sync or hardware connection is performed.
+            </div>
+            <div id="enrolment-progress-container" class="pt-2">
                 <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                     <div id="enrolment-progress-bar" class="bg-cyan-600 h-full w-0 transition-all duration-1000"></div>
                 </div>
+            </div>
+            <div id="enrolment-continue-container" class="pt-2 hidden">
+                <button onclick="app.continueAfterPasskeySetup()" class="w-full bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2.5 px-5 rounded-lg shadow transition-all text-sm cursor-pointer">
+                    Continue
+                </button>
             </div>
         </div>
     </div>
@@ -311,7 +384,7 @@
 
     <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
-        SecureBank DSR Choice Architecture Artefact &bull; $2\times2$ Factorial Experiment Platform
+        Cloudstorage Proxy DSR Choice Architecture Artefact &bull; $2\times2$ Factorial Experiment Platform
     </footer>
 
     <!-- Application Controller Logic -->
@@ -416,24 +489,34 @@
                 this.currentStage = stageNum;
                 
                 document.getElementById('stage-1').classList.add('hidden');
+                document.getElementById('stage-security-briefing').classList.add('hidden');
                 document.getElementById('stage-2').classList.add('hidden');
                 document.getElementById('stage-3').classList.add('hidden');
+                document.getElementById('stage-app-setup').classList.add('hidden');
                 document.getElementById('stage-4').classList.add('hidden');
 
-                document.getElementById(`stage-${stageNum}`).classList.remove('hidden');
+                if(stageNum === 'briefing') {
+                    document.getElementById('stage-security-briefing').classList.remove('hidden');
+                } else if(stageNum === 'app-setup') {
+                    document.getElementById('stage-app-setup').classList.remove('hidden');
+                } else {
+                    document.getElementById(`stage-${stageNum}`).classList.remove('hidden');
+                }
 
                 const badge = document.getElementById('step-badge');
                 const title = document.getElementById('step-title');
 
                 const stageInfo = {
-                    1: { badge: "Step 1 of 4", title: "Account Registration" },
-                    2: { badge: "Step 2 of 4", title: "Security Notice (Risk Disclosure)" },
-                    3: { badge: "Step 3 of 4", title: "2FA Selection" },
-                    4: { badge: "Step 4 of 4", title: "Registration Completed" }
+                    1: { badge: "Step 1 of 5", title: "Account Registration" },
+                    'briefing': { badge: "Step 2 of 5", title: "Mandatory Security Briefing" },
+                    2: { badge: "Step 3 of 5", title: "Security Notice (Risk Disclosure)" },
+                    3: { badge: "Step 4 of 5", title: "2FA Selection" },
+                    'app-setup': { badge: "Step 5 of 5", title: "Authentication App Setup" },
+                    4: { badge: "Step 5 of 5", title: "Registration Completed" }
                 };
 
-                badge.innerText = stageInfo[stageNum].badge;
-                title.innerText = stageInfo[stageNum].title;
+                badge.innerText = (stageNum === 'briefing') ? stageInfo['briefing'].badge : stageInfo[stageNum].badge;
+                title.innerText = (stageNum === 'briefing') ? stageInfo['briefing'].title : stageInfo[stageNum].title;
 
                 if(stageNum === 3 && !this.startTime) {
                     this.startTimer();
@@ -487,6 +570,11 @@
                     passError.classList.add('hidden');
                 }
 
+                // Proceed to mandatory security briefing page
+                this.goToStage('briefing');
+            }
+
+            completeSecurityBriefing() {
                 if(this.sessionData.infoNudgePresent) {
                     this.goToStage(2);
                 } else {
@@ -501,13 +589,15 @@
             goBack(currentStage) {
                 if(currentStage === 1) {
                     this.resetExperiment();
-                } else if(currentStage === 2) {
+                } else if(currentStage === 'briefing') {
                     this.goToStage(1);
+                } else if(currentStage === 2) {
+                    this.goToStage('briefing');
                 } else if(currentStage === 3) {
                     if(this.sessionData.infoNudgePresent) {
                         this.goToStage(2);
                     } else {
-                        this.goToStage(1);
+                        this.goToStage('briefing');
                     }
                 }
             }
@@ -525,10 +615,34 @@
                 const hasStructural = this.sessionData.structuralNudgesPresent;
 
                 let methods = [
-                    { id: 'passkey', name: 'FIDO2 Passkeys', desc: 'Hardware-bound cryptographic keys. Extremely secure, phishing-resistant, and single-touch biometrics.', resilience: 'High', recommended: true },
-                    { id: 'totp', name: 'App-based TOTP', desc: 'Google Authenticator, Microsoft Authenticator or Authy codes generated offline.', resilience: 'High', recommended: true },
-                    { id: 'push', name: 'Push Notification (with Number Matching)', desc: 'Encrypted push alerts via APNs/FCM delivering real-time prompts to your enrolled mobile app.', resilience: 'Medium', recommended: false },
-                    { id: 'sms', name: 'SMS-OTP (Text Message)', desc: '6-digit verification code sent via telecom SMS. Vulnerable to SIM-swapping interception.', resilience: 'Low (Vulnerable to SIM-swapping)', recommended: false }
+                    { 
+                        id: 'passkey', 
+                        name: 'Passkey', 
+                        desc: 'A secure, phishing resistant passkey is stored directly on your usage device (cryptographic key), which you can later use through established device security (e.g. Face ID or your device\'s PIN).', 
+                        resilience: 'High', 
+                        recommended: true 
+                    },
+                    { 
+                        id: 'totp', 
+                        name: 'App-based one-time passwords', 
+                        desc: 'One-time passwords are generated on a separate authenticator app, which you must enter on the screen for verification. Requires the use of a separate authenticator app (such as Google Authenticator or Microsoft Authenticator) on a mobile device, linked with your account to generate rolling 6-digit verification codes.', 
+                        resilience: 'Medium', 
+                        recommended: false 
+                    },
+                    { 
+                        id: 'push', 
+                        name: 'Push notification in app', 
+                        desc: 'You will receive push notification to the paired Cloudstorage Proxy mobile app, which you must acknowledge. Requires the installation of the Cloudstorage Proxy mobile app on a mobile device and linking it with your online account to receive and approve real-time verification prompts via push notifications.', 
+                        resilience: 'Medium', 
+                        recommended: false 
+                    },
+                    { 
+                        id: 'sms', 
+                        name: 'SMS-based one-time passwords', 
+                        desc: 'One-time passwords are sent via text message (SMS) to your registered mobile phone number, which you must enter on the screen for verification.', 
+                        resilience: 'Low (vulnerable to SIM-swapping)', 
+                        recommended: false 
+                    }
                 ];
 
                 if(hasStructural) {
@@ -610,11 +724,82 @@
 
             submitStage3Selection() {
                 if(!this.pendingMethod) return;
-                
-                // Trigger realistic enrolment simulation step
-                this.simulateEnrolment(this.pendingMethod, () => {
-                    this.finalizeMfaSelection(this.pendingMethod);
+
+                // Passkeys use a timed simulated installation modal. App-based
+                // methods show an instruction page instead of a pop-up.
+                if(this.pendingMethod === 'passkey') {
+                    this.simulatePasskeyEnrolment();
+                } else if(this.pendingMethod === 'totp' || this.pendingMethod === 'push') {
+                    this.showAppSetupInformation(this.pendingMethod);
+                } else {
+                    // Keep the existing short simulation for SMS-OTP.
+                    this.simulateEnrolment(this.pendingMethod, () => {
+                        this.finalizeMfaSelection(this.pendingMethod);
+                    });
+                }
+            }
+
+            showAppSetupInformation(methodId) {
+                const title = document.getElementById('app-setup-title');
+                const instructions = document.getElementById('app-setup-instructions');
+
+                if(methodId === 'totp') {
+                    title.innerText = 'Set Up an Authenticator App';
+                    instructions.innerText = 'To use app-based one-time passwords, you must have an authenticator app installed on a mobile device of your choice (for example, Google Authenticator or Microsoft Authenticator). You would then need to link that app to your Cloudstorage Proxy account so that it can generate verification codes for sign-in.';
+                } else {
+                    title.innerText = 'Set Up the Cloudstorage Proxy App';
+                    instructions.innerText = 'To use push-based authentication, you must have the Cloudstorage Proxy app installed on a mobile device of your choice. You would then need to sign into the app to link it to your Cloudstorage Proxy account, allowing the app to receive and approve sign-in notifications.';
+                }
+
+                this.goToStage('app-setup');
+            }
+
+            completeAppSetupInformation() {
+                this.finalizeMfaSelection(this.pendingMethod);
+            }
+
+            simulatePasskeyEnrolment() {
+                const modal = document.getElementById('enrolment-modal');
+                const icon = document.getElementById('enrolment-modal-icon');
+                const title = document.getElementById('enrolment-modal-title');
+                const desc = document.getElementById('enrolment-modal-desc');
+                const progressBar = document.getElementById('enrolment-progress-bar');
+                const progressContainer = document.getElementById('enrolment-progress-container');
+                const continueContainer = document.getElementById('enrolment-continue-container');
+                const simulationNote = document.getElementById('enrolment-simulation-note');
+
+                // Initial five-second simulated installation phase.
+                icon.innerHTML = '<svg class="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>';
+                icon.className = 'w-12 h-12 bg-cyan-100 text-cyan-700 rounded-full flex items-center justify-center mx-auto';
+                title.innerText = 'Installing Passkey...';
+                desc.innerText = 'Please wait while the passkey installation is simulated.';
+                simulationNote.classList.remove('hidden');
+                progressContainer.classList.remove('hidden');
+                continueContainer.classList.add('hidden');
+                progressBar.style.transition = 'none';
+                progressBar.style.width = '0%';
+                modal.classList.remove('hidden');
+
+                // Restart the CSS transition cleanly, then fill over five seconds.
+                requestAnimationFrame(() => {
+                    progressBar.style.transition = 'width 5s linear';
+                    progressBar.style.width = '100%';
                 });
+
+                setTimeout(() => {
+                    icon.innerHTML = '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+                    icon.className = 'w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto';
+                    title.innerText = 'Passkey Successfully Installed';
+                    desc.innerText = 'Your passkey has been successfully installed on this local device. In the future, you can access it through an automatic prompt from your operating system and verify your identity using your PIN or another authentication method provided by your operating system.';
+                    simulationNote.innerHTML = '<span class="font-bold">Study Simulation Note:</span> This is a simulated installation. No actual passkey is created, stored, or connected to the device.';
+                    progressContainer.classList.add('hidden');
+                    continueContainer.classList.remove('hidden');
+                }, 5000);
+            }
+
+            continueAfterPasskeySetup() {
+                document.getElementById('enrolment-modal').classList.add('hidden');
+                this.finalizeMfaSelection('passkey');
             }
 
             simulateEnrolment(methodId, callback) {
@@ -622,21 +807,27 @@
                 const title = document.getElementById('enrolment-modal-title');
                 const desc = document.getElementById('enrolment-modal-desc');
                 const progressBar = document.getElementById('enrolment-progress-bar');
-                
+                const progressContainer = document.getElementById('enrolment-progress-container');
+                const continueContainer = document.getElementById('enrolment-continue-container');
+                const icon = document.getElementById('enrolment-modal-icon');
+                const simulationNote = document.getElementById('enrolment-simulation-note');
+
                 const configs = {
-                    'passkey': { title: 'Setting up FIDO2 Passkey...', desc: 'Please verify with TouchID, Windows Hello or your security key hardware.' },
-                    'totp': { title: 'Configuring Authenticator App...', desc: 'Scanning shared secret QR code & validating initial 6-digit TOTP token.' },
-                    'push': { title: 'Binding Mobile Push Channel...', desc: 'Connecting APNs/FCM device token for number-matching push notifications.' },
-                    'sms': { title: 'Registering SMS Gateway...', desc: 'Verifying recipient phone number via carrier telecom route.' }
+                    'sms': { title: 'Configuring SMS Carrier Gateway...', desc: 'Binding registered mobile phone number to SMS-OTP verification service.' }
                 };
 
                 const cfg = configs[methodId] || { title: 'Finalizing Enrolment...', desc: 'Please wait while we secure your account.' };
+                icon.innerHTML = '<svg class="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>';
+                icon.className = 'w-12 h-12 bg-cyan-100 text-cyan-700 rounded-full flex items-center justify-center mx-auto';
                 title.innerText = cfg.title;
                 desc.innerText = cfg.desc;
+                simulationNote.classList.remove('hidden');
+                progressContainer.classList.remove('hidden');
+                continueContainer.classList.add('hidden');
+                progressBar.style.transition = 'width 1s linear';
                 progressBar.style.width = '0%';
                 modal.classList.remove('hidden');
 
-                // Animate progress bar
                 setTimeout(() => { progressBar.style.width = '70%'; }, 200);
                 setTimeout(() => { progressBar.style.width = '100%'; }, 900);
 
@@ -747,7 +938,3 @@
     </script>
 </body>
 </html>
-```
-
-### Kurze Rückfrage:
-Siehst du den simulierten Enrolment-Dialog jetzt, wenn du in der Web-Vorschau eine Methode auswählst und auf *Confirm Selection* klickst? (Das Modal blendet sich für 1,4 Sekunden ein, simuliert die Einrichtung und leitet dann sauber zur Abschlussseite weiter).
