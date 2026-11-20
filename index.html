@@ -357,7 +357,7 @@
 
     <!-- Application Controller Logic -->
     <script>
-	class MFAExperimentApp {
+        class MFAExperimentApp {
             constructor() {
                 this.assignmentMode = 'random';
                 this.currentGroup = Math.floor(Math.random() * 4) + 1;
@@ -380,19 +380,6 @@
                 this.parseUrlParameters();
                 this.updateLogCount();
                 this.updateGroupUI();
-
-                // Prüfen, ob das Experiment bereits abgeschlossen wurde
-                const savedState = localStorage.getItem('mfa_experiment_completed_' + this.participantId);
-                if (savedState) {
-                    const data = JSON.parse(savedState);
-                    this.selectedMethod = data.method;
-                    // Direkt zur Abschluss-Ansicht (Stage 4) springen
-                    setTimeout(() => {
-                        document.getElementById('setup-card').classList.add('hidden');
-                        document.getElementById('workflow-container').classList.remove('hidden');
-                        this.restoreStage4(data.method);
-                    }, 50);
-                }
             }
 
             parseUrlParameters() {
@@ -504,29 +491,6 @@
                 if(stageNum === 3) {
                     this.renderMfaOptions();
                 }
-            }
-
-	restoreStage4(methodId) {
-                this.currentStage = 4;
-                document.getElementById('stage-1').classList.add('hidden');
-                document.getElementById('stage-security-briefing').classList.add('hidden');
-                document.getElementById('stage-2').classList.add('hidden');
-                document.getElementById('stage-3').classList.add('hidden');
-                document.getElementById('stage-app-setup').classList.add('hidden');
-                document.getElementById('stage-4').classList.remove('hidden');
-
-                const methodNames = {
-                    'passkey': 'FIDO2 Passkeys',
-                    'totp': 'App-based TOTP',
-                    'push': 'Push Notification (Number Matching)',
-                    'sms': 'SMS-OTP'
-                };
-                const nameEl = document.getElementById('success-method-name');
-                if(nameEl) nameEl.innerText = methodNames[methodId] || methodId;
-
-                // Titel im Header anpassen
-                const title = document.getElementById('step-title');
-                if(title) title.innerText = "Registration Completed";
             }
 
             startTimer() {
@@ -844,18 +808,10 @@ validateStage1() {
                 this.sessionData.selectedMethod = methodId;
                 this.sessionData.decisionLatencySeconds = latency;
 
-		// Status im Browser speichern, damit er beim Zurückgehen erhalten bleibt 
-                try {
-                    localStorage.setItem('mfa_experiment_completed_' + this.participantId, JSON.stringify({
-                        method: methodId,
-                        latency: latency
-                    }));
-                } catch(e) {}
-
                 this.telemetryLogs.push({...this.sessionData});
                 this.saveLogs();
 
-		// Signal an Limesurvey senden
+		<!-- Signal an Limesurvey senden -->
    		if (window.parent !== window) {
         		window.parent.postMessage({
            		type: 'mfa_experiment_complete',
