@@ -46,16 +46,6 @@
     <!-- Main area holding the active study screen (landing card or multi-step registration workflow) -->
     <main class="flex-grow max-w-4xl w-full mx-auto p-4 sm:p-6 my-auto">
 
-        <!-- Helper banner for researchers/testers showing which experimental group is active; remove before launch -->
-        <div id="debug-group-banner" class="bg-indigo-50 border border-indigo-200 rounded-xl p-3 mb-4 text-xs text-indigo-900 flex items-center justify-between shadow-sm">
-            <div class="flex items-center space-x-2">
-                <span class="w-2 h-2 rounded-full bg-indigo-600 animate-pulse"></span>
-                <span class="font-bold">Test Mode (Debug Indicator):</span>
-                <span id="debug-group-text" class="font-semibold">Group 1: Baseline Control</span>
-            </div>
-            <span class="text-[10px] text-indigo-500 uppercase tracking-wider font-mono">Will be removed before study</span>
-        </div>
-
         <!-- Initial welcome screen -->
         <div id="setup-card" class="bg-white rounded-xl shadow-lg border border-slate-200 p-6 sm:p-8 mb-6 transition-all">
             <div class="max-w-2xl mx-auto text-center space-y-5 py-4">
@@ -108,21 +98,22 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">First Name</label>
-                            <input type="text" id="firstname-input" required value="Max" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+                            <input type="text" id="firstname-input" required placeholder="First name" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Last Name</label>
-                            <input type="text" id="lastname-input" required value="Mustermann" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+                            <input type="text" id="lastname-input" required placeholder="Last name" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email Address (Username)</label>
-                        <input type="email" id="email-input" required value="participant_test@cloudproxy.net" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+                        <input type="email" id="email-input" required placeholder="name@example.com" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
                         <p id="email-error" class="text-xs text-rose-600 mt-1 hidden">Please enter a valid email address.</p>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Mobile Phone Number (for SMS/Push)</label>
-                        <input type="tel" id="phone-input" required value="+49 151 98765432" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Mobile Phone Number</label>
+                        <input type="tel" id="phone-input" required placeholder="+49 xxxx xxxxxxxx" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
+                        <p id="phone-error" class="text-xs text-rose-600 mt-1 hidden">Please enter a valid mobile phone number (e.g. +49 151 12345678).</p>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Master Password</label>
@@ -138,6 +129,7 @@
                         <input type="password" id="password-confirm-input" required placeholder="Re-enter password" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm">
                         <p id="password-error" class="text-xs text-rose-600 mt-1 hidden">Passwords do not match or do not meet security criteria.</p>
                     </div>
+                    <p id="details-error" class="text-xs text-rose-600 hidden">Please fill out all required fields (first name, last name, email, and phone number).</p>
                     <div class="pt-2 flex items-center space-x-3">
                         <button type="button" onclick="app.goBack(1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-lg transition-all border border-slate-300 text-sm cursor-pointer">
                             Back
@@ -308,7 +300,6 @@
                 };
 
                 this.parseUrlParameters();
-                this.updateGroupUI();
             }
 
             // Reads optional ?group= and ?id= (or ?participant_id=) query parameters from the page URL
@@ -344,22 +335,6 @@
                 } catch (e) {}
             }
 
-
-            // Syncs the debug banner text and keeps sessionData.group aligned with the current group
-            updateGroupUI() {
-                const debugText = document.getElementById('debug-group-text');
-                if (!debugText) return;
-
-                const groupNames = {
-                    1: "Group 1: Baseline Control (No Info, No Structure)",
-                    2: "Group 2: Info Nudge Only (Risk Priming active)",
-                    3: "Group 3: Structural Nudges Only (Defaults & Salience)",
-                    4: "Group 4: Hybrid Condition (Info + Structure)"
-                };
-
-                debugText.innerText = groupNames[this.currentGroup];
-                this.sessionData.group = this.currentGroup;
-            }
 
             // Hides the welcome card, shows the workflow container, starts a fresh session record, and opens Stage 1
             startExperiment() {
@@ -430,21 +405,41 @@
               return parseFloat(elapsed.toFixed(2));
             }
 
-            // Checks email syntax and password strength/match before advancing to the security briefing
+            // Checks required personal details, email syntax, and password strength/match before advancing
             validateStage1() {
+                const firstName = document.getElementById('firstname-input').value.trim();
+                const lastName = document.getElementById('lastname-input').value.trim();
                 const emailInput = document.getElementById('email-input').value.trim();
+                const phoneInput = document.getElementById('phone-input').value.trim();
                 const passInput = document.getElementById('password-input').value;
                 const confirmInput = document.getElementById('password-confirm-input').value;
 
+                const detailsError = document.getElementById('details-error');
                 const emailError = document.getElementById('email-error');
+                const phoneError = document.getElementById('phone-error');
                 const passError = document.getElementById('password-error');
+
+                detailsError.classList.add('hidden');
+                emailError.classList.add('hidden');
+                phoneError.classList.add('hidden');
+                passError.classList.add('hidden');
+
+                if (!firstName || !lastName || !emailInput || !phoneInput) {
+                    detailsError.classList.remove('hidden');
+                    return;
+                }
 
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(emailInput)) {
                     emailError.classList.remove('hidden');
                     return;
-                } else {
-                    emailError.classList.add('hidden');
+                }
+                
+                const digitsOnly = phoneInput.replace(/\D/g, '');
+                const phoneFormatValid = /^\+?[\d\s\-()]+$/.test(phoneInput) && digitsOnly.length >= 7 && digitsOnly.length <= 15;
+                if (!phoneFormatValid) {
+                  phoneError.classList.remove('hidden');
+                  return;
                 }
 
                 const passValid = passInput.length >= 10 && /\d/.test(passInput) && /[!@#$%^&*(),.?":{}|<>]/.test(passInput);
@@ -453,8 +448,6 @@
                 if (!passValid || !passMatch) {
                     passError.classList.remove('hidden');
                     return;
-                } else {
-                    passError.classList.add('hidden');
                 }
 
                 // Proceed to mandatory security briefing page
