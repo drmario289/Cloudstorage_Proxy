@@ -275,6 +275,30 @@
         </div>
     </div>
 
+    <!-- Pop-up confirmation modal shown only when structural nudges are active and SMS OTP is selected -->
+    <div id="sms-warning-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-slate-200 text-center">
+            <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <div class="space-y-1.5">
+                <h3 class="text-lg font-bold text-slateDark">Low-Security Authentication Method</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    SMS-based one-time passwords have low security. Do you really want to use this method?
+                </p>
+            </div>
+            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+                <button type="button" onclick="app.closeSmsWarningModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-4 rounded-xl transition-all border border-slate-300 text-sm cursor-pointer">
+                    Go back to selection
+                </button>
+                <button type="button" onclick="app.confirmSmsProceed()" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 px-4 rounded-xl shadow transition-all text-sm cursor-pointer">
+                    Finish registration
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Bottom footer bar -->
     <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
@@ -615,17 +639,35 @@
             // Launches the right enrolment flow (modal or setup screen) for whichever MFA method was chosen
             submitStage3Selection() {
                 if (!this.pendingMethod) return;
-
-                // Passkeys use a timed simulated installation modal. App-based
-                // methods show an instruction page instead of a pop-up.
+            
+                const hasStructural = (this.currentGroup === 3 || this.currentGroup === 4);
+            
                 if (this.pendingMethod === 'passkey') {
                     this.simulatePasskeyEnrolment();
                 } else if (this.pendingMethod === 'totp' || this.pendingMethod === 'push') {
                     this.showAppSetupInformation(this.pendingMethod);
+                } else if (this.pendingMethod === 'sms' && hasStructural) {
+                    this.openSmsWarningModal();
                 } else {
-                    // for SMS-OTP go directly to final page.
+                    // For SMS-OTP outside structural nudge groups, go directly to final page.
                     this.finalizeMfaSelection(this.pendingMethod);
                 }
+            }
+            
+            // Opens the SMS low-security warning pop-up
+            openSmsWarningModal() {
+                document.getElementById('sms-warning-modal').classList.remove('hidden');
+            }
+            
+            // Closes the pop-up and keeps the user on Stage 3 (the MFA selection page)
+            closeSmsWarningModal() {
+                document.getElementById('sms-warning-modal').classList.add('hidden');
+            }
+            
+            // Closes the pop-up and proceeds to the final page (Stage 4) with SMS selected
+            confirmSmsProceed() {
+                document.getElementById('sms-warning-modal').classList.add('hidden');
+                this.finalizeMfaSelection('sms');
             }
 
             // Populates instructions tailored to TOTP or Push and opens the app setup stage
