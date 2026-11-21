@@ -514,28 +514,28 @@
                         id: 'passkey',
                         name: 'Passkey',
                         desc: 'A secure, phishing resistant passkey is stored directly on your usage device (cryptographic key), which you can later use through established device security (e.g. Face ID or your device\'s PIN).',
-                        resilience: 'High',
+                        resilience: 'High security',
                         recommended: true
                     },
                     {
                         id: 'totp',
                         name: 'App-based one-time passwords',
                         desc: 'One-time passwords are generated on a separate authenticator app, which you must enter on the screen for verification. Requires the use of a separate authenticator app (such as Google Authenticator or Microsoft Authenticator) on a mobile device, linked with your account to generate rolling 6-digit verification codes.',
-                        resilience: 'Medium',
+                        resilience: 'Medium security',
                         recommended: false
                     },
                     {
                         id: 'push',
                         name: 'Push notification in app',
                         desc: 'You will receive push notification to the paired Cloudstorage Proxy mobile app, which you must acknowledge. Requires the installation of the Cloudstorage Proxy mobile app on a mobile device and linking it with your online account to receive and approve real-time verification prompts via push notifications.',
-                        resilience: 'Medium',
+                        resilience: 'Medium security',
                         recommended: false
                     },
                     {
                         id: 'sms',
                         name: 'SMS-based one-time passwords',
                         desc: 'One-time passwords are sent via text message (SMS) to your registered mobile phone number.',
-                        resilience: 'Low (vulnerable to SIM-swapping)',
+                        resilience: 'Low security (vulnerable to SIM-swapping)',
                         recommended: false
                     }
                 ];
@@ -569,7 +569,7 @@
                     const radioId = `radio_${m.id}`;
 
                     const resilienceBadgeHtml = hasStructural ? `
-                        <div class="text-xs font-semibold px-2.5 py-1 rounded-lg self-center flex-shrink-0 ml-2 ${m.resilience.startsWith('High') ? 'bg-emerald-100 text-emerald-800' : (m.resilience.startsWith('Medium') ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800')}">
+                        <div class="text-xs font-semibold px-2.5 py-1 rounded-lg self-center flex-shrink-0 ml-2 ${m.resilience.startsWith('High security') ? 'bg-emerald-100 text-emerald-800' : (m.resilience.startsWith('Medium security') ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800')}">
                             ${m.resilience}
                         </div>
                     ` : '';
@@ -630,10 +630,8 @@
                 } else if (this.pendingMethod === 'totp' || this.pendingMethod === 'push') {
                     this.showAppSetupInformation(this.pendingMethod);
                 } else {
-                    // Keep the existing short simulation for SMS-OTP.
-                    this.simulateEnrolment(this.pendingMethod, () => {
-                        this.finalizeMfaSelection(this.pendingMethod);
-                    });
+                    // for SMS-OTP go directly to final page.
+                    this.finalizeMfaSelection(this.pendingMethod);
                 }
             }
 
@@ -700,41 +698,6 @@
                 this.finalizeMfaSelection('passkey');
             }
 
-            // Runs a short progress modal for non-Passkey simulated enrolments (such as SMS-OTP)
-            simulateEnrolment(methodId, callback) {
-                const modal = document.getElementById('enrolment-modal');
-                const title = document.getElementById('enrolment-modal-title');
-                const desc = document.getElementById('enrolment-modal-desc');
-                const progressBar = document.getElementById('enrolment-progress-bar');
-                const progressContainer = document.getElementById('enrolment-progress-container');
-                const continueContainer = document.getElementById('enrolment-continue-container');
-                const icon = document.getElementById('enrolment-modal-icon');
-                const simulationNote = document.getElementById('enrolment-simulation-note');
-
-                const configs = {
-                    'sms': { title: 'Configuring SMS Carrier Gateway...', desc: 'Binding registered mobile phone number to SMS-OTP verification service.' }
-                };
-
-                const cfg = configs[methodId] || { title: 'Finalizing Enrolment...', desc: 'Please wait while we secure your account.' };
-                icon.innerHTML = '<svg class="w-6 h-6 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>';
-                icon.className = 'w-12 h-12 bg-cyan-100 text-cyan-700 rounded-full flex items-center justify-center mx-auto';
-                title.innerText = cfg.title;
-                desc.innerText = cfg.desc;
-                simulationNote.classList.remove('hidden');
-                progressContainer.classList.remove('hidden');
-                continueContainer.classList.add('hidden');
-                progressBar.style.transition = 'width 1s linear';
-                progressBar.style.width = '0%';
-                modal.classList.remove('hidden');
-
-                setTimeout(() => { progressBar.style.width = '70%'; }, 200);
-                setTimeout(() => { progressBar.style.width = '100%'; }, 900);
-
-                setTimeout(() => {
-                    modal.classList.add('hidden');
-                    callback();
-                }, 1400);
-            }
 
             // Saves latency and choice, notifies LimeSurvey (if embedded) or return_url, and opens Stage 4
             finalizeMfaSelection(methodId) {
