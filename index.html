@@ -90,7 +90,7 @@
                 <div class="bg-amber-50 border border-amber-200 p-3.5 rounded-lg text-xs text-amber-900 flex items-start space-x-2 text-left">
                     <svg class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <div>
-                        <span class="font-bold">Simulation Notice:</span> This is a simulation for a research study. Please enter <strong>fictitious data</strong> only (do not use your real name, email address, or phone number).
+                        <span class="font-bold">Simulation Notice:</span> This is a simulation for a research study. You may enter <strong>fictitious data</strong>. In any case, none of the data you enter here will be saved.
                     </div>
                 </div>
 
@@ -514,114 +514,114 @@
             }
 
             // Builds the four MFA choice cards in Stage 3, applying nudge ordering, highlights, and badges when active
-            renderMfaOptions() {
-                const container = document.getElementById('mfa-options-list');
-                if (!container) return;
-                container.innerHTML = '';
-
-                this.pendingMethod = null;
-                const continueBtn = document.getElementById('mfa-continue-btn');
-                continueBtn.disabled = true;
-                continueBtn.className = "bg-slate-300 text-slate-500 font-semibold py-2.5 px-6 rounded-xl shadow-sm cursor-not-allowed transition-all";
-
-                const hasStructural = (this.currentGroup === 3 || this.currentGroup === 4);
-
-                let methods = [
-                    {
-                        id: 'passkey',
-                        name: 'Passkey',
-                        desc: 'A secure, phishing resistant passkey is stored directly on your usage device (cryptographic key), which you can later use through established device security (e.g. Face ID or your device\'s PIN).',
-                        resilience: 'High security',
-                        recommended: true
-                    },
-                    {
-                        id: 'totp',
-                        name: 'App-based one-time passwords',
-                        desc: 'One-time passwords are generated on a separate authenticator app, which you must enter on the screen for verification. Requires the use of a separate authenticator app (such as Google Authenticator or Microsoft Authenticator) on a mobile device, linked with your account to generate rolling 6-digit verification codes.',
-                        resilience: 'Medium security',
-                        recommended: false
-                    },
-                    {
-                        id: 'push',
-                        name: 'Push notification in app',
-                        desc: 'You will receive push notification to the paired Cloudstorage Proxy mobile app, which you must acknowledge. Requires the installation of the Cloudstorage Proxy mobile app on a mobile device and linking it with your online account to receive and approve real-time verification prompts via push notifications.',
-                        resilience: 'Medium security',
-                        recommended: false
-                    },
-                    {
-                        id: 'sms',
-                        name: 'SMS-based one-time passwords',
-                        desc: 'One-time passwords are sent via text message (SMS) to your registered mobile phone number.',
-                        resilience: 'Low security (vulnerable to SIM-swapping)',
-                        recommended: false
-                    }
-                ];
-
-                // Put strongest methods first when structural nudges are active; reverse order otherwise
-                if (hasStructural) {
-                    methods = [methods[0], methods[1], methods[2], methods[3]];
-                } else {
-                    methods = [methods[3], methods[2], methods[1], methods[0]];
-                }
-
-                methods.forEach((m) => {
-                    const isDefault = hasStructural && m.id === 'passkey';
-                    const card = document.createElement('div');
-
-                    let baseClasses = "p-4 rounded-xl border transition-all cursor-pointer flex items-start justify-between ";
-                    if (hasStructural) {
-                        if (m.id === 'passkey') {
-                            baseClasses += "border-cyan-500 bg-cyan-50/50 shadow-md ring-2 ring-cyan-400/30";
-                        } else if (m.id === 'totp' || m.id === 'push') {
-                            baseClasses += "border-slate-300 bg-white shadow-sm hover:border-cyan-300";
-                        } else {
-                            baseClasses += "border-slate-200 bg-slate-50 opacity-80 hover:opacity-100";
-                        }
-                    } else {
-                        baseClasses += "border-slate-200 bg-white shadow-sm hover:border-slate-300";
-                    }
-
-                    card.className = baseClasses;
-
-                    const radioId = `radio_${m.id}`;
-
-                    const resilienceBadgeHtml = hasStructural ? `
-                        <div class="text-xs font-semibold px-2.5 py-1 rounded-lg self-center flex-shrink-0 ml-2 ${m.resilience.startsWith('High security') ? 'bg-emerald-100 text-emerald-800' : (m.resilience.startsWith('Medium security') ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800')}">
-                            ${m.resilience}
-                        </div>
-                    ` : '';
-
-                    card.innerHTML = `
-                        <div class="flex items-start space-x-3 w-full">
-                            <div class="mt-1">
-                                <input type="radio" id="${radioId}" name="mfa_choice" value="${m.id}" ${isDefault ? 'checked' : ''} class="mt-0.5 text-cyan-600 focus:ring-cyan-500 cursor-pointer">
-                            </div>
-                            <div class="flex-grow cursor-pointer">
-                                <div class="flex items-center">
-                                    <span class="font-bold text-sm text-slateDark">${m.name}</span>
-                                    ${hasStructural && m.recommended ? '<span class="bg-cyan-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ml-2">Recommended</span>' : ''}
-                                </div>
-                                <p class="text-xs text-slate-600 mt-1">${m.desc}</p>
-                            </div>
-                        </div>
-                        ${resilienceBadgeHtml}
-                    `;
-
-                    card.onclick = (e) => {
-                        if (e.target.tagName !== 'INPUT') {
-                            document.getElementById(radioId).checked = true;
-                        }
-                        this.selectMfaMethod(m.id);
-                    };
-
-                    container.appendChild(card);
-                });
-
-                // Pre-select Passkey when structural nudges are active so the default nudge is ready to confirm
-                if (hasStructural) {
-                    this.selectMfaMethod('passkey');
-                }
-            }
+              renderMfaOptions() {
+                  const container = document.getElementById('mfa-options-list');
+                  if (!container) return;
+                  container.innerHTML = '';
+  
+                  this.pendingMethod = null;
+                  const continueBtn = document.getElementById('mfa-continue-btn');
+                  continueBtn.disabled = true;
+                  continueBtn.className = "bg-slate-300 text-slate-500 font-semibold py-2.5 px-6 rounded-xl shadow-sm cursor-not-allowed transition-all";
+  
+                  const hasStructural = (this.currentGroup === 3 || this.currentGroup === 4);
+  
+                  let methods = [
+                      {
+                          id: 'passkey',
+                          name: 'Passkey',
+                          desc: 'A secure, phishing resistant passkey is stored directly on your usage device (cryptographic key), which you can later use through established device security (e.g. Face ID or your device\'s PIN).',
+                          resilience: 'High security',
+                          recommended: true
+                      },
+                      {
+                          id: 'totp',
+                          name: 'App-based one-time passwords',
+                          desc: 'One-time passwords are generated on a separate authenticator app, which you must enter on the screen for verification. Requires the use of a separate authenticator app (such as Google Authenticator or Microsoft Authenticator) on a mobile device, linked with your account to generate rolling 6-digit verification codes.',
+                          resilience: 'Medium security',
+                          recommended: false
+                      },
+                      {
+                          id: 'push',
+                          name: 'Push notification in app',
+                          desc: 'You will receive push notification to the paired Cloudstorage Proxy mobile app, which you must acknowledge. Requires the installation of the Cloudstorage Proxy mobile app on a mobile device and linking it with your online account to receive and approve real-time verification prompts via push notifications.',
+                          resilience: 'Medium security',
+                          recommended: false
+                      },
+                      {
+                          id: 'sms',
+                          name: 'SMS-based one-time passwords',
+                          desc: 'One-time passwords are sent via text message (SMS) to your registered mobile phone number.',
+                          resilience: 'Low security (vulnerable to SIM-swapping)',
+                          recommended: false
+                      }
+                  ];
+  
+                  // Put strongest methods first when structural nudges are active; reverse order otherwise
+                  if (hasStructural) {
+                      methods = [methods[0], methods[1], methods[2], methods[3]];
+                  } else {
+                      methods = [methods[3], methods[2], methods[1], methods[0]];
+                  }
+  
+                  methods.forEach((m) => {
+                      const isDefault = hasStructural && m.id === 'passkey';
+                      const card = document.createElement('div');
+  
+                      let baseClasses = "p-4 rounded-xl border transition-all cursor-pointer flex items-start justify-between ";
+                      if (hasStructural) {
+                          if (m.id === 'passkey') {
+                              baseClasses += "border-cyan-500 bg-cyan-50/50 shadow-md ring-2 ring-cyan-400/30";
+                          } else if (m.id === 'totp' || m.id === 'push') {
+                              baseClasses += "border-slate-300 bg-white shadow-sm hover:border-cyan-300";
+                          } else {
+                              baseClasses += "border-slate-200 bg-slate-50 opacity-80 hover:opacity-100";
+                          }
+                      } else {
+                          baseClasses += "border-slate-200 bg-white shadow-sm hover:border-slate-300";
+                      }
+  
+                      card.className = baseClasses;
+  
+                      const radioId = `radio_${m.id}`;
+  
+                      const resilienceBadgeHtml = hasStructural ? `
+                          <div class="text-xs font-semibold px-2.5 py-1 rounded-lg self-center flex-shrink-0 ml-2 ${m.resilience.startsWith('High security') ? 'bg-emerald-100 text-emerald-800' : (m.resilience.startsWith('Medium security') ? 'bg-amber-100 text-amber-800' : 'bg-rose-100 text-rose-800')}">
+                              ${m.resilience}
+                          </div>
+                      ` : '';
+  
+                      card.innerHTML = `
+                          <div class="flex items-start space-x-3 w-full">
+                              <div class="mt-1">
+                                  <input type="radio" id="${radioId}" name="mfa_choice" value="${m.id}" ${isDefault ? 'checked' : ''} class="mt-0.5 text-cyan-600 focus:ring-cyan-500 cursor-pointer">
+                              </div>
+                              <div class="flex-grow cursor-pointer">
+                                  <div class="flex items-center">
+                                      <span class="font-bold text-sm text-slateDark">${m.name}</span>
+                                      ${hasStructural && m.recommended ? '<span class="bg-cyan-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ml-2">Recommended</span>' : ''}
+                                  </div>
+                                  <p class="text-xs text-slate-600 mt-1">${m.desc}</p>
+                              </div>
+                          </div>
+                          ${resilienceBadgeHtml}
+                      `;
+  
+                      card.onclick = (e) => {
+                          if (e.target.tagName !== 'INPUT') {
+                              document.getElementById(radioId).checked = true;
+                          }
+                          this.selectMfaMethod(m.id);
+                      };
+  
+                      container.appendChild(card);
+                  });
+  
+                  // Pre-select Passkey when structural nudges are active so the default nudge is ready to confirm
+                  if (hasStructural) {
+                      this.selectMfaMethod('passkey');
+                  }
+              }
 
             // Marks a chosen MFA option as pending, enables the confirm button, and syncs radio state
             selectMfaMethod(methodId) {
